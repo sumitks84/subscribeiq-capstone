@@ -18,7 +18,10 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
-from data import load_raw_data, clean_data, compute_rfm_features, build_preprocessor, NUMERIC_FEATURES
+try:
+    from .data import load_raw_data, clean_data, compute_rfm_features, build_preprocessor, NUMERIC_FEATURES
+except ImportError:
+    from data import load_raw_data, clean_data, compute_rfm_features, build_preprocessor, NUMERIC_FEATURES
 
 K_RANGE = range(2, 9)
 OUTPUT_CHART_PATH = "cluster_selection.png"

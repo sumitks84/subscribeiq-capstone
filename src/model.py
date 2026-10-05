@@ -23,14 +23,27 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import train_test_split
 
-from data import (
-    load_raw_data,
-    clean_data,
-    compute_rfm_features,
-    build_preprocessor,
-    get_feature_target_split,
-    NUMERIC_FEATURES,
-)
+try:
+    # Works when model.py is imported as part of the src package
+    # (e.g. Streamlit running app.py, which does `from src.model import ...`)
+    from .data import (
+        load_raw_data,
+        clean_data,
+        compute_rfm_features,
+        build_preprocessor,
+        get_feature_target_split,
+        NUMERIC_FEATURES,
+    )
+except ImportError:
+    # Works when model.py is run directly, e.g. `python src/model.py`
+    from data import (
+        load_raw_data,
+        clean_data,
+        compute_rfm_features,
+        build_preprocessor,
+        get_feature_target_split,
+        NUMERIC_FEATURES,
+    )
 
 MODEL_DIR = "models"
 N_CLUSTERS = 4  # chosen via elbow method / silhouette score — see notebook

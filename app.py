@@ -7,6 +7,7 @@ Run with:
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import shap
 import streamlit as st
@@ -138,11 +139,23 @@ if len(filtered) > 0:
     row_enc = preprocessor.transform(selected_row[feature_cols].to_frame().T)
 
     explainer = get_explainer(churn_model, background_enc)
-    shap_values = explainer.shap_values(row_enc)
+    raw_shap = explainer.shap_values(row_enc)
 
-    # For binary classifiers, shap_values may be a list [class0, class1];
-    # we want the "churn = yes" class contributions.
-    values = shap_values[1][0] if isinstance(shap_values, list) else shap_values[0]
+    # Different SHAP versions return this in different shapes for a
+    # binary classifier. Handle all three so this doesn't break again
+    # if the library updates:
+    #   - list [class0_values, class1_values], each (n_samples, n_features)
+    #   - ndarray (n_samples, n_features, n_classes)
+    #   - ndarray (n_samples, n_features)  (single-output case)
+    if isinstance(raw_shap, list):
+        values = raw_shap[1][0]
+    else:
+        raw_shap = np.asarray(raw_shap)
+        if raw_shap.ndim == 3:
+            values = raw_shap[0, :, 1]  # row 0, all features, "churn=yes" class
+        else:
+            values = raw_shap[0]
+
     feature_names = get_encoded_feature_names(preprocessor)
 
     contrib = pd.Series(values, index=feature_names).sort_values(key=abs, ascending=False).head(8)
