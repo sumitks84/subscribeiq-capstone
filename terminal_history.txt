@@ -1,0 +1,545 @@
+PS C:\Users\sumit\Downloads\data\subscribeiq-capstone>git add .
+warning: in the working copy of 'app.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'requirements.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/cluster_selection.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/data.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/model.py', LF will be replaced by CRLF the next time Git touches it
+PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> git commit -m "Add initial project structure: data, model, app, cluster selection"                          
+[main 8d5d36a] Add initial project structure: data, model, app, cluster selection
+ 7 files changed, 566 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 app.py
+ create mode 100644 requirements.txt
+ create mode 100644 src/__init__.py
+ create mode 100644 src/cluster_selection.py
+ create mode 100644 src/data.py
+ create mode 100644 src/model.py
+PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> git push
+Enumerating objects: 11, done.
+Counting objects: 100% (11/11), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (10/10), 8.29 KiB | 1.66 MiB/s, done.
+Total 10 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://github.com/sumitks84/subscribeiq-capstone.git
+   48212f8..8d5d36a  main -> main
+PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> python -m venv venv
+PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> venv\Scripts\activate  
+venv\Scripts\activate : File C:\Users\su
+mit\Downloads\data\subscribeiq-capstone\
+venv\Scripts\Activate.ps1 cannot be 
+loaded because running scripts is 
+disabled on this system. For more 
+information, see 
+about_Execution_Policies at https:/go.mi
+crosoft.com/fwlink/?LinkID=135170.
+At line:1 char:1
++ venv\Scripts\activate
++ ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : SecurityE 
+   rror: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : Unauthori 
+   zedAccess
+PS C:\Users\su                                                      
+PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> venv\Scripts\activate
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> git config --global core.autocrlf true
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> pip install -r requirements.txt
+Collecting streamlit>=1.35 (from -r requirements.txt (line 1))
+  Downloading streamlit-1.65.0-py3-none-any.whl.metadata (10 kB)
+Collecting pandas>=2.0 (from -r requirements.txt (line 2))
+  Downloading pandas-3.0.6-cp314-cp314-win_amd64.whl.metadata (19 kB)
+Collecting numpy>=1.26 (from -r requirements.txt (line 3))
+  Downloading numpy-2.5.3-cp314-cp314-win_amd64.whl.metadata (6.6 kB)
+Collecting scikit-learn>=1.4 (from -r requirements.txt (line 4))
+  Downloading scikit_learn-1.9.1-cp314-cp314-win_amd64.whl.metadata (9.3 kB)
+Collecting shap>=0.45 (from -r requirements.txt (line 5))
+  Downloading shap-0.52.0-cp312-abi3-win_amd64.whl.metadata (26 kB)
+Collecting joblib>=1.4 (from -r requirements.txt (line 6))
+  Downloading joblib-1.6.0-py3-none-any.whl.metadata (6.5 kB)
+Collecting matplotlib>=3.8 (from -r requirements.txt (line 7))
+  Downloading matplotlib-3.11.2-cp314-cp314-win_amd64.whl.metadata (80 kB)
+Collecting altair!=5.4.0,!=5.4.1,<7,>=5.0.0 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading altair-6.3.0-py3-none-any.whl.metadata (11 kB)
+Collecting click<9,>=7.0 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting packaging>=20 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting pillow<13,>=7.1.0 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading pillow-12.3.0-cp314-cp314-win_amd64.whl.metadata (9.3 kB)
+Collecting pydeck<1,>=0.8.0b4 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading pydeck-0.9.3-py2.py3-none-any.whl.metadata (4.2 kB)
+Collecting protobuf<8,>=5.26.1 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading protobuf-7.36.2-cp310-abi3-win_amd64.whl.metadata (595 bytes)
+Collecting pyarrow!=25.0.0,<26,>=7.0 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading pyarrow-25.0.1-cp314-cp314-win_amd64.whl.metadata (3.0 kB)
+Collecting requests<3,>=2.27 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting toml<2,>=0.10.1 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading toml-0.10.2-py2.py3-none-any.whl.metadata (7.1 kB)
+Collecting typing-extensions<5,>=4.10.0 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting starlette<2,>=0.46.0 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading starlette-1.7.0-py3-none-any.whl.metadata (6.6 kB)
+Collecting uvicorn<1,>=0.30.0 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+Collecting httptools<1,>=0.6.3 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading httptools-0.8.0-cp314-cp314-win_amd64.whl.metadata (3.7 kB)
+Collecting anyio<5,>=4.0.0 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+Collecting python-multipart<1,>=0.0.10 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading python_multipart-0.0.32-py3-none-any.whl.metadata (2.1 kB)
+Collecting websockets<18,>=12.0.0 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading websockets-17.2-cp314-cp314-win_amd64.whl.metadata (6.5 kB)
+Collecting itsdangerous<3,>=2.1.2 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting watchdog<7,>=2.1.5 (from streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading watchdog-6.0.0-py3-none-win_amd64.whl.metadata (44 kB)
+Collecting python-dateutil>=2.8.2 (from pandas>=2.0->-r requirements.txt (line 2))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting tzdata (from pandas>=2.0->-r requirements.txt (line 2))
+  Downloading tzdata-2026.5-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting jinja2 (from altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting jsonschema>=3.0 (from altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
+Collecting narwhals>=2.4.0 (from altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading narwhals-2.27.0-py3-none-any.whl.metadata (15 kB)
+Collecting idna>=2.8 (from anyio<5,>=4.0.0->streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+Collecting charset_normalizer<4,>=2 (from requests<3,>=2.27->streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading charset_normalizer-3.5.2-cp314-cp314-win_amd64.whl.metadata (47 kB)
+Collecting urllib3<3,>=1.26 (from requests<3,>=2.27->streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting certifi>=2023.5.7 (from requests<3,>=2.27->streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+Collecting h11>=0.8 (from uvicorn<1,>=0.30.0->streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting scipy>=1.10.0 (from scikit-learn>=1.4->-r requirements.txt (line 4))
+  Downloading scipy-1.18.1-cp314-cp314-win_amd64.whl.metadata (61 kB)
+Collecting threadpoolctl>=3.5.0 (from scikit-learn>=1.4->-r requirements.txt (line 4))
+  Downloading threadpoolctl-3.7.0-py3-none-any.whl.metadata (24 kB)
+Collecting tqdm>=4.27.0 (from shap>=0.45->-r requirements.txt (line 5))
+  Downloading tqdm-4.70.1-py3-none-any.whl.metadata (57 kB)
+Collecting slicer==0.0.8 (from shap>=0.45->-r requirements.txt (line 5))
+  Downloading slicer-0.0.8-py3-none-any.whl.metadata (4.0 kB)
+Collecting numba (from shap>=0.45->-r requirements.txt (line 5))
+  Downloading numba-0.68.0-cp314-cp314-win_amd64.whl.metadata (2.9 kB)
+Collecting llvmlite (from shap>=0.45->-r requirements.txt (line 5))
+  Downloading llvmlite-0.50.0-cp314-cp314-win_amd64.whl.metadata (5.2 kB)
+Collecting cloudpickle (from shap>=0.45->-r requirements.txt (line 5))
+  Downloading cloudpickle-3.1.2-py3-none-any.whl.metadata (7.1 kB)
+Collecting contourpy>=1.0.1 (from matplotlib>=3.8->-r requirements.txt (line 7))
+  Downloading contourpy-1.4.0-cp314-cp314-win_amd64.whl.metadata (3.8 kB)
+Collecting cycler>=0.10 (from matplotlib>=3.8->-r requirements.txt (line 7))
+  Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools>=4.28.2 (from matplotlib>=3.8->-r requirements.txt (line 7))
+  Downloading fonttools-4.66.1-cp314-cp314-win_amd64.whl.metadata (132 kB)
+Collecting kiwisolver>=1.3.1 (from matplotlib>=3.8->-r requirements.txt (line 7))
+  Downloading kiwisolver-1.5.1-cp314-cp314-win_amd64.whl.metadata (5.2 kB)
+Collecting pyparsing>=3 (from matplotlib>=3.8->-r requirements.txt (line 7))
+  Downloading pyparsing-3.3.3-py3-none-any.whl.metadata (5.9 kB)
+Collecting MarkupSafe>=2.0 (from jinja2->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading markupsafe-3.0.4-cp314-cp314-win_amd64.whl.metadata (2.8 kB)
+Collecting attrs>=22.2.0 (from jsonschema>=3.0->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting jsonschema-specifications>=2023.03.6 (from jsonschema>=3.0->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+Collecting referencing>=0.28.4 (from jsonschema>=3.0->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+Collecting rpds-py>=0.25.0 (from jsonschema>=3.0->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1))
+  Downloading rpds_py-2026.9.1-cp314-cp314-win_amd64.whl.metadata (4.2 kB)
+Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas>=2.0->-r requirements.txt (line 2))
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting colorama (from tqdm>=4.27.0->shap>=0.45->-r requirements.txt (line 5))
+  Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+Downloading streamlit-1.65.0-py3-none-any.whl (10.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.3/10.3 MB 224.1 kB/s  0:00:42
+Downloading pandas-3.0.6-cp314-cp314-win_amd64.whl (9.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.8/9.8 MB 353.1 kB/s  0:00:30
+Downloading numpy-2.5.3-cp314-cp314-win_amd64.whl (12.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.7/12.7 MB 198.1 kB/s  0:01:11
+Downloading altair-6.3.0-py3-none-any.whl (797 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 797.2/797.2 kB 613.8 kB/s  0:00:01
+Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+Downloading click-8.5.0-py3-none-any.whl (125 kB)
+Downloading httptools-0.8.0-cp314-cp314-win_amd64.whl (92 kB)
+Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Downloading pillow-12.3.0-cp314-cp314-win_amd64.whl (7.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.2/7.2 MB 349.1 kB/s  0:00:20
+Downloading protobuf-7.36.2-cp310-abi3-win_amd64.whl (456 kB)
+Downloading pyarrow-25.0.1-cp314-cp314-win_amd64.whl (28.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 28.6/28.6 MB 757.1 kB/s  0:00:41
+Downloading pydeck-0.9.3-py2.py3-none-any.whl (11.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 11.4/11.4 MB 1.8 MB/s  0:00:06
+Downloading python_multipart-0.0.32-py3-none-any.whl (30 kB)
+Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+Downloading charset_normalizer-3.5.2-cp314-cp314-win_amd64.whl (210 kB)
+Downloading idna-3.20-py3-none-any.whl (69 kB)
+Downloading starlette-1.7.0-py3-none-any.whl (78 kB)
+Downloading toml-0.10.2-py2.py3-none-any.whl (16 kB)
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+Downloading uvicorn-0.54.0-py3-none-any.whl (87 kB)
+Downloading watchdog-6.0.0-py3-none-win_amd64.whl (79 kB)
+Downloading websockets-17.2-cp314-cp314-win_amd64.whl (218 kB)
+Downloading scikit_learn-1.9.1-cp314-cp314-win_amd64.whl (8.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.4/8.4 MB 629.5 kB/s  0:00:13
+Downloading shap-0.52.0-cp312-abi3-win_amd64.whl (499 kB)
+Downloading slicer-0.0.8-py3-none-any.whl (15 kB)
+Downloading joblib-1.6.0-py3-none-any.whl (306 kB)
+Downloading matplotlib-3.11.2-cp314-cp314-win_amd64.whl (9.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.5/9.5 MB 779.9 kB/s  0:00:12
+Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+Downloading cloudpickle-3.1.2-py3-none-any.whl (22 kB)
+Downloading contourpy-1.4.0-cp314-cp314-win_amd64.whl (240 kB)
+Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Downloading fonttools-4.66.1-cp314-cp314-win_amd64.whl (2.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.5/2.5 MB 1.4 MB/s  0:00:01
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+Downloading kiwisolver-1.5.1-cp314-cp314-win_amd64.whl (72 kB)
+Downloading markupsafe-3.0.4-cp314-cp314-win_amd64.whl (14 kB)
+Downloading narwhals-2.27.0-py3-none-any.whl (483 kB)
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+Downloading pyparsing-3.3.3-py3-none-any.whl (126 kB)
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+Downloading rpds_py-2026.9.1-cp314-cp314-win_amd64.whl (222 kB)
+Downloading scipy-1.18.1-cp314-cp314-win_amd64.whl (37.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 37.4/37.4 MB 1.4 MB/s  0:00:26
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading threadpoolctl-3.7.0-py3-none-any.whl (26 kB)
+Downloading tqdm-4.70.1-py3-none-any.whl (80 kB)
+Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Downloading llvmlite-0.50.0-cp314-cp314-win_amd64.whl (43.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.0/43.0 MB 1.2 MB/s  0:00:42
+Downloading numba-0.68.0-cp314-cp314-win_amd64.whl (2.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.8/2.8 MB 1.9 MB/s  0:00:01
+Downloading tzdata-2026.5-py2.py3-none-any.whl (347 kB)
+Installing collected packages: websockets, watchdog, urllib3, tzdata, typing-extensions, toml, threadpoolctl, slicer, six, rpds-py, python-multipart, pyparsing, pyarrow, protobuf, pillow, packaging, numpy, narwhals, MarkupSafe, llvmlite, kiwisolver, itsdangerous, idna, httptools, h11, fonttools, cycler, colorama, cloudpickle, click, charset_normalizer, certifi, attrs, uvicorn, tqdm, scipy, requests, referencing, python-dateutil, numba, joblib, jinja2, contourpy, anyio, starlette, scikit-learn, pydeck, pandas, matplotlib, jsonschema-specifications, shap, jsonschema, altair, streamlit
+Successfully installed MarkupSafe-3.0.4 altair-6.3.0 anyio-4.15.1 attrs-26.1.0 certifi-2026.7.22 charset_normalizer-3.5.2 click-8.5.0 cloudpickle-3.1.2 colorama-0.4.6 contourpy-1.4.0 cycler-0.12.1 fonttools-4.66.1 h11-0.16.0 httptools-0.8.0 idna-3.20 itsdangerous-2.2.0 jinja2-3.1.6 joblib-1.6.0 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 kiwisolver-1.5.1 llvmlite-0.50.0 matplotlib-3.11.2 narwhals-2.27.0 numba-0.68.0 numpy-2.5.3 packaging-26.3 pandas-3.0.6 pillow-12.3.0 protobuf-7.36.2 pyarrow-25.0.1 pydeck-0.9.3 pyparsing-3.3.3 python-dateutil-2.9.0.post0 python-multipart-0.0.32 referencing-0.37.0 requests-2.34.2 rpds-py-2026.9.1 scikit-learn-1.9.1 scipy-1.18.1 shap-0.52.0 six-1.17.0 slicer-0.0.8 starlette-1.7.0 streamlit-1.65.0 threadpoolctl-3.7.0 toml-0.10.2 tqdm-4.70.1 typing-extensions-4.16.0 tzdata-2026.5 urllib3-2.8.0 uvicorn-0.54.0 watchdog-6.0.0 websockets-17.2
+
+[notice] A new release of pip is available: 25.3 -> 26.2.1
+[notice] To update, run: python.exe -m pip install --upgrade pip
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> python src/cluster_selection.py
+  k |      inertia | silhouette
+  2 |       9712.1 |      0.480
+  3 |       6186.2 |      0.451
+  4 |       4148.5 |      0.472
+  5 |       3111.4 |      0.444
+  6 |       2562.9 |      0.440
+  7 |       2204.4 |      0.450
+  8 |       1863.2 |      0.425
+Chart saved to cluster_selection.png
+
+Recommended k: 2 (update N_CLUSTERS in model.py if different)
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> python src/model.py
+ROC-AUC: 0.841982484693482
+              precision    recall  f1-score      support
+0              0.905213  0.738164  0.813199  1035.000000
+1              0.520354  0.786096  0.626198   374.000000
+accuracy       0.750887  0.750887  0.750887     0.750887
+macro avg      0.712784  0.762130  0.719698  1409.000000
+weighted avg   0.803058  0.750887  0.763562  1409.000000
+Artifacts saved to models
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> streamlit run app.py
+
+      Welcome to Streamlit!
+
+      If you'd like to receive helpful onboarding emails, news, offers, promotions,
+      and the occasional swag, please enter your email address below. Otherwise,
+      leave this field blank.
+
+      Email: 
+
+  You can find our privacy policy at https://streamlit.io/privacy-policy
+
+  Summary:
+  - This open source library collects usage statistics.
+  - We cannot see and do not store information contained inside Streamlit apps,
+    such as text, charts, images, etc.
+  - Telemetry data is stored in servers in the United States.
+  - If you'd like to opt out, add the following to %userprofile%/.streamlit/config.toml,
+    creating that file if necessary:
+
+    [browser]
+    gatherUsageStats = false
+
+2026-10-05 18:23:08.460 Uvicorn server started on :::8501
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.206.24.199:8501
+
+  Help agents write better Streamlit apps?
+  Install the official Streamlit skills by running streamlit skills in your terminal.
+
+2026-10-05 18:23:13.402 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\sumit\Downloads\data\subscribeiq-capstone\venv\Lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\sumit\Downloads\data\subscribeiq-capstone\venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 924, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sumit\Downloads\data\subscribeiq-capstone\app.py", line 21, in <module>
+    from src.model import (
+    ...<4 lines>...
+    )
+  File "C:\Users\sumit\Downloads\data\subscribeiq-capstone\src\model.py", line 26, in <module>
+    from data import (
+    ...<6 lines>...
+    )
+ImportError: cannot import name 'load_raw_data' from 'data' (unknown location)
+  Stopping...
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> streamlit run app.py
+2026-10-05 18:25:41.026 Uvicorn server started on :::8501
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.206.24.199:8501
+
+  Help agents write better Streamlit apps?
+  Install the official Streamlit skills by running streamlit skills in your terminal.
+
+2026-10-05 18:26:10.444 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-10-05 18:26:10.664 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\sumit\Downloads\data\subscribeiq-capstone\venv\Lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\sumit\Downloads\data\subscribeiq-capstone\venv\Lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 924, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sumit\Downloads\data\subscribeiq-capstone\app.py", line 148, in <module>
+    contrib = pd.Series(values, index=feature_names).sort_values(key=abs, ascending=False).head(8)
+              ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sumit\Downloads\data\subscribeiq-capstone\venv\Lib\site-packages\pandas\core\series.py", line 514, in __init__
+    data = sanitize_array(data, index, dtype, copy)
+  File "C:\Users\sumit\Downloads\data\subscribeiq-capstone\venv\Lib\site-packages\pandas\core\construction.py", line 681, in sanitize_array
+    subarr = _sanitize_ndim(subarr, data, dtype, index, allow_2d=allow_2d)
+  File "C:\Users\sumit\Downloads\data\subscribeiq-capstone\venv\Lib\site-packages\pandas\core\construction.py", line 740, in _sanitize_ndim
+    raise ValueError(
+        f"Data must be 1-dimensional, got ndarray of shape {data.shape} instead"
+    )
+ValueError: Data must be 1-dimensional, got ndarray of shape (46, 2) instead
+  Stopping...
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> streamlit run app.py
+2026-10-05 18:28:00.078 Uvicorn server started on :::8501
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.206.24.199:8501
+
+  Help agents write better Streamlit apps?
+  Install the official Streamlit skills by running streamlit skills in your terminal.
+
+2026-10-05 18:28:17.902 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+  Stopping...
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> git add .                                                                      
+warning: in the working copy of 'app.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/cluster_selection.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/model.py', LF will be replaced by CRLF the next time Git touches it
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> git commit -m "Fix SHAP output shape handling across versions"
+[main 5154407] Fix SHAP output shape handling across versions
+ 3 files changed, 42 insertions(+), 13 deletions(-)
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> git push
+Enumerating objects: 11, done.
+Counting objects: 100% (11/11), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 1.15 KiB | 1.15 MiB/s, done.
+Total 6 (delta 5), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (5/5), completed with 5 local objects.
+To https://github.com/sumitks84/subscribeiq-capstone.git
+   8d5d36a..5154407  main -> main
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> pip install -r requirements.txt
+Requirement already satisfied: streamlit>=1.35 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from -r requirements.txt (line 1)) (1.65.0)
+Requirement already satisfied: pandas>=2.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from -r requirements.txt (line 2)) (3.0.6)
+Requirement already satisfied: numpy>=1.26 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from -r requirements.txt (line 3)) (2.5.3)
+Requirement already satisfied: scikit-learn>=1.4 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from -r requirements.txt (line 4)) (1.9.1)
+Requirement already satisfied: shap>=0.45 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from -r requirements.txt (line 5)) (0.52.0)
+Requirement already satisfied: joblib>=1.4 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from -r requirements.txt (line 6)) (1.6.0)
+Requirement already satisfied: matplotlib>=3.8 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from -r requirements.txt (line 7)) (3.11.2)
+Collecting plotly>=5.22 (from -r requirements.txt (line 8))
+  Downloading plotly-7.1.0-py3-none-any.whl.metadata (8.8 kB)
+Requirement already satisfied: altair!=5.4.0,!=5.4.1,<7,>=5.0.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (6.3.0)
+Requirement already satisfied: click<9,>=7.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (8.5.0)
+Requirement already satisfied: packaging>=20 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (26.3)
+Requirement already satisfied: pillow<13,>=7.1.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (12.3.0)
+Requirement already satisfied: pydeck<1,>=0.8.0b4 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (0.9.3)
+Requirement already satisfied: protobuf<8,>=5.26.1 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (7.36.2)
+Requirement already satisfied: pyarrow!=25.0.0,<26,>=7.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (25.0.1)
+Requirement already satisfied: requests<3,>=2.27 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (2.34.2)
+Requirement already satisfied: toml<2,>=0.10.1 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (0.10.2)
+Requirement already satisfied: typing-extensions<5,>=4.10.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (4.16.0)
+Requirement already satisfied: starlette<2,>=0.46.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (1.7.0)
+Requirement already satisfied: uvicorn<1,>=0.30.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (0.54.0)
+Requirement already satisfied: httptools<1,>=0.6.3 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (0.8.0)
+Requirement already satisfied: anyio<5,>=4.0.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (4.15.1)
+Requirement already satisfied: python-multipart<1,>=0.0.10 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (0.0.32)
+Requirement already satisfied: websockets<18,>=12.0.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (17.2)
+Requirement already satisfied: itsdangerous<3,>=2.1.2 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (2.2.0)
+Requirement already satisfied: watchdog<7,>=2.1.5 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from streamlit>=1.35->-r requirements.txt (line 1)) (6.0.0)
+Requirement already satisfied: python-dateutil>=2.8.2 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from pandas>=2.0->-r requirements.txt (line 2)) (2.9.0.post0)
+Requirement already satisfied: tzdata in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from pandas>=2.0->-r requirements.txt (line 2)) (2026.5)
+Requirement already satisfied: jinja2 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1)) (3.1.6)
+Requirement already satisfied: jsonschema>=3.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1)) (4.26.0)
+Requirement already satisfied: narwhals>=2.4.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1)) (2.27.0)
+Requirement already satisfied: idna>=2.8 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from anyio<5,>=4.0.0->streamlit>=1.35->-r requirements.txt (line 1)) (3.20)
+Requirement already satisfied: charset_normalizer<4,>=2 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from requests<3,>=2.27->streamlit>=1.35->-r requirements.txt (line 1)) (3.5.2)
+Requirement already satisfied: urllib3<3,>=1.26 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from requests<3,>=2.27->streamlit>=1.35->-r requirements.txt (line 1)) (2.8.0)
+Requirement already satisfied: certifi>=2023.5.7 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from requests<3,>=2.27->streamlit>=1.35->-r requirements.txt (line 1)) (2026.7.22)
+Requirement already satisfied: h11>=0.8 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from uvicorn<1,>=0.30.0->streamlit>=1.35->-r requirements.txt (line 1)) (0.16.0)
+Requirement already satisfied: scipy>=1.10.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from scikit-learn>=1.4->-r requirements.txt (line 4)) (1.18.1)
+Requirement already satisfied: threadpoolctl>=3.5.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from scikit-learn>=1.4->-r requirements.txt (line 4)) (3.7.0)
+Requirement already satisfied: tqdm>=4.27.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from shap>=0.45->-r requirements.txt (line 5)) (4.70.1)
+Requirement already satisfied: slicer==0.0.8 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from shap>=0.45->-r requirements.txt (line 5)) (0.0.8)
+Requirement already satisfied: numba in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from shap>=0.45->-r requirements.txt (line 5)) (0.68.0)
+Requirement already satisfied: llvmlite in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from shap>=0.45->-r requirements.txt (line 5)) (0.50.0)
+Requirement already satisfied: cloudpickle in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from shap>=0.45->-r requirements.txt (line 5)) (3.1.2)
+Requirement already satisfied: contourpy>=1.0.1 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from matplotlib>=3.8->-r requirements.txt (line 7)) (1.4.0)
+Requirement already satisfied: cycler>=0.10 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from matplotlib>=3.8->-r requirements.txt (line 7)) (0.12.1)
+Requirement already satisfied: fonttools>=4.28.2 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from matplotlib>=3.8->-r requirements.txt (line 7)) (4.66.1)
+Requirement already satisfied: kiwisolver>=1.3.1 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from matplotlib>=3.8->-r requirements.txt (line 7)) (1.5.1)
+Requirement already satisfied: pyparsing>=3 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from matplotlib>=3.8->-r requirements.txt (line 7)) (3.3.3)
+Requirement already satisfied: MarkupSafe>=2.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from jinja2->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1)) (3.0.4)
+Requirement already satisfied: attrs>=22.2.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from jsonschema>=3.0->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1)) (26.1.0)
+Requirement already satisfied: jsonschema-specifications>=2023.03.6 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from jsonschema>=3.0->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1)) (2025.9.1)
+Requirement already satisfied: referencing>=0.28.4 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from jsonschema>=3.0->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1)) (0.37.0)
+Requirement already satisfied: rpds-py>=0.25.0 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from jsonschema>=3.0->altair!=5.4.0,!=5.4.1,<7,>=5.0.0->streamlit>=1.35->-r requirements.txt (line 1)) (2026.9.1)
+Requirement already satisfied: six>=1.5 in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from python-dateutil>=2.8.2->pandas>=2.0->-r requirements.txt (line 2)) (1.17.0)
+Requirement already satisfied: colorama in c:\users\sumit\downloads\data\subscribeiq-capstone\venv\lib\site-packages (from tqdm>=4.27.0->shap>=0.45->-r requirements.txt (line 5)) (0.4.6)
+Downloading plotly-7.1.0-py3-none-any.whl (9.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.7/9.7 MB 125.8 kB/s  0:01:27
+Installing collected packages: plotly
+Successfully installed plotly-7.1.0
+
+[notice] A new release of pip is available: 25.3 -> 26.2.1
+[notice] To update, run: python.exe -m pip install --upgrade pip
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   .gitignore
+        modified:   app.py
+        modified:   requirements.txt
+        modified:   src/model.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .streamlit/
+        data/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   .gitignore
+        modified:   app.py
+        modified:   requirements.txt
+        modified:   src/model.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .streamlit/
+        data/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> git add .
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'requirements.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/model.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.streamlit/config.toml', LF will be replaced by CRLF the next time Git touches it
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   .gitignore
+        new file:   .streamlit/config.toml
+        modified:   app.py
+        new file:   data/telco_churn.csv
+        modified:   requirements.txt
+        modified:   src/model.py
+
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> streamlit run app.py
+2026-10-05 20:50:30.140 Uvicorn server started on :::8501
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.206.24.199:8501
+
+  Help agents write better Streamlit apps?
+  Install the official Streamlit skills by running streamlit skills in your terminal.
+
+2026-10-05 20:50:50.666 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-10-05 20:50:50.815 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-10-05 20:50:50.906 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-10-05 20:50:50.995 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-10-05 20:50:51.010 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2026-10-05 20:50:51.348 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+  Stopping...
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> git commit -m "Redesign dashboard with tabs and interactive charts; add self-training and dataset for deployment"
+[main 585a245] Redesign dashboard with tabs and interactive charts; add self-training and dataset for deployment
+ 6 files changed, 7384 insertions(+), 100 deletions(-)
+ create mode 100644 .streamlit/config.toml
+ create mode 100644 data/telco_churn.csv
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> git push
+Enumerating objects: 17, done.
+Counting objects: 100% (17/17), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (11/11), 167.80 KiB | 4.30 MiB/s, done.
+Total 11 (delta 3), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/sumitks84/subscribeiq-capstone.git
+   5154407..585a245  main -> main
+(venv) PS C:\Users\sumit\Downloads\data\subscribeiq-capstone> 
