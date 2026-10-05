@@ -173,7 +173,13 @@ def load_artifacts():
     return preprocessor, kmeans, churn_model, segment_labels
 
 
-if __name__ == "__main__":
+def run_training_pipeline(verbose: bool = True):
+    """
+    Full training pipeline, callable from the CLI (python src/model.py)
+    or automatically by the app on first run if no saved models exist
+    yet (e.g. right after a fresh deploy with an empty models/ folder).
+    Returns the trained artifacts.
+    """
     raw = load_raw_data()
     df = clean_data(raw)
     df = compute_rfm_features(df)
@@ -196,8 +202,30 @@ if __name__ == "__main__":
     churn_model = train_churn_model(X_train_enc, y_train, model_type="random_forest")
     results = evaluate_model(churn_model, X_test_enc, y_test)
 
-    print("ROC-AUC:", results["roc_auc"])
-    print(pd.DataFrame(results["classification_report"]).T)
+    if verbose:
+        print("ROC-AUC:", results["roc_auc"])
+        print(pd.DataFrame(results["classification_report"]).T)
 
     save_artifacts(preprocessor, kmeans, churn_model, segment_labels)
-    print("Artifacts saved to", MODEL_DIR)
+    if verbose:
+        print("Artifacts saved to", MODEL_DIR)
+
+    return preprocessor, kmeans, churn_model, segment_labels
+
+
+def load_or_train_artifacts():
+    """
+    Used by the app: load saved models if they exist, otherwise train
+    them fresh. This makes a brand-new deploy (with an empty models/
+    folder) self-heal on its first request instead of crashing.
+    """
+    import os
+
+    try:
+        return load_artifacts()
+    except FileNotFoundError:
+        return run_training_pipeline(verbose=False)
+
+
+if __name__ == "__main__":
+    run_training_pipeline()

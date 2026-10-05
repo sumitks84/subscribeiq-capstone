@@ -2,6 +2,10 @@ venv/
 __pycache__/
 *.pyc
 models/
-data/
 .DS_Store
 *.png
+
+# Keep the dataset itself tracked so the deployed app can self-train —
+# ignore everything else that might land in data/ (exports, scratch files)
+data/*
+!data/telco_churn.csv
