@@ -22,6 +22,7 @@ from sklearn.metrics import (
     precision_recall_curve,
 )
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV, StratifiedKFold
 
 try:
     # Works when model.py is imported as part of the src package
@@ -88,7 +89,12 @@ def label_segments(df: pd.DataFrame, cluster_labels: np.ndarray) -> dict:
     return label_map
 
 
-def train_churn_model(X_train, y_train, model_type: str = "random_forest"):
+def train_churn_model(
+    X_train,
+    y_train,
+    model_type: str = "random_forest",
+    model_params: dict | None = None,
+):
     """
     Train the churn classifier. Class weighting handles the churn
     class imbalance (~27% positive) without needing synthetic
@@ -105,8 +111,31 @@ def train_churn_model(X_train, y_train, model_type: str = "random_forest"):
             class_weight="balanced",
             random_state=42,
         )
+        if model_params:
+            model.set_params(**model_params)
     model.fit(X_train, y_train)
     return model
+
+
+def tune_churn_model(X_train, y_train):
+    """Select Random Forest settings with stratified ROC-AUC cross-validation."""
+    search = GridSearchCV(
+        estimator=RandomForestClassifier(
+            class_weight="balanced",
+            random_state=42,
+            n_jobs=-1,
+        ),
+        param_grid={
+            "n_estimators": [150, 300],
+            "max_depth": [6, 8],
+        },
+        scoring="roc_auc",
+        cv=StratifiedKFold(n_splits=5, shuffle=True, random_state=42),
+        n_jobs=-1,
+        refit=True,
+    )
+    search.fit(X_train, y_train)
+    return search.best_estimator_, search.best_params_, search.best_score_
 
 
 def evaluate_model(model, X_test, y_test) -> dict:
@@ -199,10 +228,12 @@ def run_training_pipeline(verbose: bool = True):
     )
     segment_labels = label_segments(X_train, cluster_labels)
 
-    churn_model = train_churn_model(X_train_enc, y_train, model_type="random_forest")
+    churn_model, best_params, cv_score = tune_churn_model(X_train_enc, y_train)
     results = evaluate_model(churn_model, X_test_enc, y_test)
 
     if verbose:
+        print("Best Random Forest parameters:", best_params)
+        print(f"5-fold cross-validated ROC-AUC: {cv_score:.4f}")
         print("ROC-AUC:", results["roc_auc"])
         print(pd.DataFrame(results["classification_report"]).T)
 
