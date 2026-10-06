@@ -35,51 +35,15 @@ def load_raw_data(path: str = RAW_DATA_PATH) -> pd.DataFrame:
     return df
 
 
-EXPECTED_COLUMNS = (
-    ["customerID"] + NUMERIC_FEATURES + CATEGORICAL_FEATURES + [TARGET]
-)
-
-
-def normalize_column_names(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Different copies/samples of this dataset (e.g. alternate Kaggle
-    uploads) sometimes ship with all-lowercase column names
-    ('monthlycharges' instead of 'MonthlyCharges'), or other case
-    variants. Rather than fail on an exact-name mismatch, match
-    columns case-insensitively and rename them to the casing the
-    rest of the pipeline expects.
-    """
-    df = df.copy()
-    lookup = {col.lower(): col for col in EXPECTED_COLUMNS}
-    rename_map = {}
-    for col in df.columns:
-        match = lookup.get(col.lower())
-        if match and match != col:
-            rename_map[col] = match
-    if rename_map:
-        df = df.rename(columns=rename_map)
-
-    missing = [c for c in EXPECTED_COLUMNS if c not in df.columns]
-    if missing:
-        raise ValueError(
-            "Uploaded file is missing expected column(s) even after "
-            f"case-insensitive matching: {missing}. Check the CSV has "
-            "the same fields as the Telco Customer Churn dataset."
-        )
-    return df
-
-
 def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Fix known quirks in the Telco dataset:
-    - Column names are matched case-insensitively first, so a file
-      with e.g. 'monthlycharges' instead of 'MonthlyCharges' still works.
     - TotalCharges is read as a string with some blank entries for
       customers with 0 tenure; convert to numeric and fill with 0.
     - Drop the customerID column (identifier, not a feature).
     - Encode the target as 0/1.
     """
-    df = normalize_column_names(df)
+    df = df.copy()
 
     df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
     df["TotalCharges"] = df["TotalCharges"].fillna(0)
@@ -88,12 +52,7 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
         df = df.drop(columns=["customerID"])
 
     if TARGET in df.columns:
-        # Some dataset variants already encode Churn as 0/1 instead of
-        # Yes/No strings. Only remap text labels; leave numeric ones as-is.
-        if df[TARGET].dtype == object:
-            df[TARGET] = df[TARGET].map({"Yes": 1, "No": 0})
-        else:
-            df[TARGET] = pd.to_numeric(df[TARGET], errors="coerce")
+        df[TARGET] = df[TARGET].map({"Yes": 1, "No": 0})
 
     return df
 
