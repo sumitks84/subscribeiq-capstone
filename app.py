@@ -18,6 +18,7 @@ from src.data import (
     clean_data,
     compute_rfm_features,
     get_feature_target_split,
+    load_raw_data,
     NUMERIC_FEATURES as NUM_COLS,
     CATEGORICAL_FEATURES,
 )
@@ -375,7 +376,7 @@ def show_card_insight(title: str, value: str, details: list[str]):
 
 @st.cache_data
 def load_and_score(file_or_path):
-    raw = pd.read_csv(file_or_path)
+    raw = load_raw_data(file_or_path)
     df = clean_data(raw)
     df = compute_rfm_features(df)
 
@@ -414,8 +415,9 @@ st.markdown('<span class="status-badge">● Models online &nbsp;·&nbsp; Analysi
 # ---------- Sidebar ----------
 with st.sidebar:
     st.header("Data")
-    uploaded_file = st.file_uploader("Upload a customer CSV", type="csv")
-    st.caption("No file? The bundled Telco sample dataset loads automatically.")
+    uploaded_file = st.file_uploader("Upload a customer data file")
+    st.caption("CSV, TSV, and other delimited text files are accepted. "
+               "No file? The bundled Telco sample dataset loads automatically.")
 
     st.divider()
     st.header("Filters")
@@ -427,8 +429,11 @@ data_source = uploaded_file if uploaded_file is not None else SAMPLE_DATA_PATH
 
 try:
     scored_df = load_and_score(data_source)
-except FileNotFoundError:
-    st.error("No dataset found. Upload a CSV to get started.")
+except (FileNotFoundError, pd.errors.EmptyDataError, pd.errors.ParserError, UnicodeDecodeError) as error:
+    st.error(f"Could not read the uploaded data file: {error}")
+    st.stop()
+except (KeyError, ValueError) as error:
+    st.error(f"The uploaded data file is not compatible with the customer model: {error}")
     st.stop()
 
 filtered = scored_df[scored_df["RiskTier"].isin(risk_filter)] if risk_filter else scored_df.iloc[0:0]
