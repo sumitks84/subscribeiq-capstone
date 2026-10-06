@@ -92,12 +92,16 @@ st.markdown(
     font-family: Inter, -apple-system, "Segoe UI", Roboto, sans-serif;
 }}
 
-[data-testid="stHeader"] {{ background: transparent; }}
+[data-testid="stHeader"] {{
+    background: transparent;
+    height: 0;
+}}
+[data-testid="stToolbar"] {{ display: none; }}
 #MainMenu, footer {{ visibility: hidden; }}
 
 .block-container {{
     max-width: 1320px;
-    padding-top: 2.2rem;
+    padding-top: 0.8rem;
     padding-bottom: 5rem;
 }}
 
@@ -129,23 +133,31 @@ h1, h2, h3, h4 {{ color: var(--ink); letter-spacing: -0.02em; font-weight: 700; 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.55rem 0;
-    margin-bottom: 1.6rem;
+    padding: 0.8rem 0;
+    margin-bottom: 1.15rem;
     border-bottom: 1px solid var(--line);
     position: sticky; top: 0; z-index: 30;
     background: rgba(251,251,250,0.86);
     backdrop-filter: blur(8px);
 }}
-.sq-brand {{ display: flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: 1.05rem; }}
+.sq-brand {{ display: flex; align-items: center; gap: 0.7rem; font-weight: 700; font-size: 1.3rem; letter-spacing: -0.025em; }}
 .sq-brand .mark {{
-    width: 26px; height: 26px; border-radius: 7px;
+    width: 34px; height: 34px; border-radius: 9px;
     background: var(--accent);
     display: inline-flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 0.8rem;
+    color: #fff; font-size: 1rem;
 }}
-.sq-links {{ display: flex; gap: 1.6rem; font-size: 0.86rem; }}
-.sq-links a {{ color: var(--muted); text-decoration: none; font-weight: 500; transition: color .18s ease; }}
+.sq-links {{ display: flex; gap: 1.25rem; font-size: 0.92rem; }}
+.sq-links a {{ color: var(--muted); text-decoration: none; font-weight: 500; white-space: nowrap; transition: color .18s ease; }}
 .sq-links a:hover {{ color: var(--accent); }}
+@media (max-width: 1200px) {{
+    .sq-nav {{ flex-wrap: wrap; }}
+    .sq-links {{
+        width: 100%;
+        justify-content: flex-end;
+        padding-top: 0.55rem;
+    }}
+}}
 
 /* ---- Hero ---- */
 .hero {{
