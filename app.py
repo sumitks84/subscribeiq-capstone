@@ -96,7 +96,17 @@ st.markdown(
     background: transparent;
     height: 0;
 }}
-[data-testid="stToolbar"] {{ display: none; }}
+[data-testid="stToolbar"] {{
+    visibility: visible;
+    height: 0;
+}}
+[data-testid="stToolbarActions"] {{ display: none; }}
+[data-testid="stSidebarExpandButton"],
+[data-testid="stSidebarCollapseButton"],
+[data-testid="stExpandSidebarButton"] {{
+    display: flex !important;
+    visibility: visible !important;
+}}
 #MainMenu, footer {{ visibility: hidden; }}
 
 .block-container {{
