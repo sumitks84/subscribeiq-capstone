@@ -520,22 +520,23 @@ st.markdown('<div id="priorities"></div>', unsafe_allow_html=True)
 st.markdown(
     """
 <div class="sec"><h3>Who to call first</h3>
-<p>The customers where a save is both likely needed and worth the most:
-high churn risk and above-median lifetime value. Start at the top.</p></div>
+<p>High-risk customers ranked by what they pay each month, so the biggest saves come first.
+Start at the top.</p></div>
     """,
     unsafe_allow_html=True,
 )
 
-ltv_median = scored_df["EstimatedLTV"].median()
+# Rank by monthly revenue among high-risk customers. (Filtering on above-median LTV
+# left almost nobody, because LTV falls as churn risk rises.)
 priorities = (
-    filtered[(filtered["RiskTier"] == "High") & (filtered["EstimatedLTV"] >= ltv_median)]
-    .sort_values(["EstimatedLTV", "ChurnProbability"], ascending=False)
+    filtered[filtered["RiskTier"] == "High"]
+    .sort_values(["MonthlyCharges", "ChurnProbability"], ascending=False)
     .head(6)
 )
 
 if len(priorities) == 0:
     st.info(
-        "No high-value, high-risk customers in the current filter. Widen the risk or segment "
+        "No high-risk customers in the current filter. Widen the risk or segment "
         "filters in the sidebar to see the full priority list."
     )
 else:
@@ -857,9 +858,10 @@ with tab_detail:
                 unsafe_allow_html=True,
             )
 
-        is_priority = risk_tier == "High" and row["EstimatedLTV"] > scored_df["EstimatedLTV"].median()
+        high_spend_cut = scored_df.loc[scored_df["RiskTier"] == "High", "MonthlyCharges"].median()
+        is_priority = risk_tier == "High" and row["MonthlyCharges"] >= high_spend_cut
         if is_priority:
-            st.warning("Priority retention target: high value and high churn risk.")
+            st.warning("Priority retention target: high churn risk and above-median spend among high-risk customers.")
             if st.button("Queue a retention offer"):
                 st.success(f"Retention offer queued for {selected_label}. (Demo action, no email is sent.)")
 
@@ -886,7 +888,16 @@ down (green). Longer bars matter more for this specific person.</p></div>
             raw_shap = np.asarray(raw_shap)
             values = raw_shap[0, :, 1] if raw_shap.ndim == 3 else raw_shap[0]
 
-        feature_names = get_encoded_feature_names(preprocessor)
+        def pretty_feature(name: str) -> str:
+            # "num__tenure" -> "Tenure (months)", "cat__Contract_Month-to-month" -> "Contract: Month-to-month"
+            kind, _, rest = name.partition("__")
+            if kind == "num":
+                return {"tenure": "Tenure (months)", "MonthlyCharges": "Monthly charges",
+                        "TotalCharges": "Total charges"}.get(rest, rest)
+            column, _, value = rest.partition("_")
+            return f"{column}: {value}"
+
+        feature_names = [pretty_feature(n) for n in get_encoded_feature_names(preprocessor)]
         contrib = pd.Series(values, index=feature_names).sort_values(key=abs, ascending=False).head(8)
         contrib = contrib.sort_values()
 

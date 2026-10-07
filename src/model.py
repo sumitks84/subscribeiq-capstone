@@ -79,8 +79,8 @@ def label_segments(df: pd.DataFrame, cluster_labels: np.ndarray) -> dict:
 
     names = [
         "At-risk new customer",
-        "Budget month-to-month",
-        "Growing / mid-tenure",
+        "High-spend month-to-month",
+        "Long-tenure, low spend",
         "High-value loyal",
     ]
     # Assign names in tenure order; adjust N_CLUSTERS and this list
