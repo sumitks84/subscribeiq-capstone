@@ -52,9 +52,8 @@ python src/model.py
 
 This prints cross-validation results, the best hyperparameters found, held-out test performance, and an error-analysis breakdown (false positives/negatives and their business cost).
 
-## Team
-
-Sumit — MBA, IIM Bodh Gaya
+## built by
+Sumit
 
 ## Tech stack
 
