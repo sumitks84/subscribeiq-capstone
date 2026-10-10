@@ -23,6 +23,7 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
+from sklearn.metrics import confusion_matrix
 
 try:
     # Works when model.py is imported as part of the src package
@@ -152,6 +153,54 @@ def evaluate_model(model, X_test, y_test) -> dict:
     return {"classification_report": report, "roc_auc": auc}
 
 
+def error_analysis(model, X_test, y_test, X_test_raw: pd.DataFrame, verbose: bool = True) -> dict:
+    """
+    Breaks the confusion matrix down into business terms for the
+    technical deep dive. The two error types have different costs here:
+    - False negative (predicted stay, actually churned): a customer
+      who should have been targeted for retention, and wasn't — the
+      more expensive miss for a churn model.
+    - False positive (predicted churn, actually stayed): a loyal
+      customer wrongly flagged, costing an unnecessary retention offer.
+    """
+    y_pred = model.predict(X_test)
+    tn, fp, fn, tp = confusion_matrix(y_test, y_pred).ravel()
+
+    results = {
+        "true_negatives": int(tn),
+        "false_positives": int(fp),
+        "false_negatives": int(fn),
+        "true_positives": int(tp),
+        "false_negative_rate": float(fn / (fn + tp)) if (fn + tp) else 0.0,
+        "false_positive_rate": float(fp / (fp + tn)) if (fp + tn) else 0.0,
+    }
+
+    if verbose:
+        print("Confusion matrix:")
+        print(f"  True negatives (correctly predicted to stay):  {tn}")
+        print(f"  False positives (wrongly flagged as churn):    {fp}")
+        print(f"  False negatives (missed churners):              {fn}")
+        print(f"  True positives (correctly caught churners):    {tp}")
+        print(f"  False negative rate: {results['false_negative_rate']:.2%}")
+
+    # Surface the highest-value misses — customers the model predicted
+    # would stay, but who actually churned — as concrete error-analysis
+    # examples rather than just a rate.
+    X_test_raw = X_test_raw.copy()
+    X_test_raw["actual_churn"] = y_test.values
+    X_test_raw["predicted_churn"] = y_pred
+    missed = X_test_raw[
+        (X_test_raw["actual_churn"] == 1) & (X_test_raw["predicted_churn"] == 0)
+    ].sort_values("MonthlyCharges", ascending=False)
+    results["costliest_missed_churners"] = missed.head(5)
+
+    if verbose and len(missed) > 0:
+        print("\nTop 5 highest-value missed churners (false negatives):")
+        print(missed[["tenure", "MonthlyCharges", "Contract"]].head(5).to_string())
+
+    return results
+
+
 def get_shap_explainer(model, X_background):
     """
     Build a SHAP explainer for the trained model. TreeExplainer is
@@ -236,6 +285,8 @@ def run_training_pipeline(verbose: bool = True):
         print(f"5-fold cross-validated ROC-AUC: {cv_score:.4f}")
         print("ROC-AUC:", results["roc_auc"])
         print(pd.DataFrame(results["classification_report"]).T)
+        print("\n--- Error analysis ---")
+    error_analysis(churn_model, X_test_enc, y_test, X_test.copy(), verbose=verbose)
 
     save_artifacts(preprocessor, kmeans, churn_model, segment_labels)
     if verbose:

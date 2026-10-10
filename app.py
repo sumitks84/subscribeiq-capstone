@@ -408,6 +408,7 @@ st.markdown(
   <div class="sq-brand"><span class="mark">◆</span> SubscribeIQ</div>
   <div class="sq-links">
     <a href="#priorities">Who to call</a>
+    <a href="#roi">Campaign ROI</a>
     <a href="#drivers">Why they leave</a>
     <a href="#explore">Explore</a>
     <a href="#detail">Customer</a>
@@ -555,6 +556,79 @@ else:
         )
     saved = int(priorities["MonthlyCharges"].sum())
     st.caption(f"Saving just these {len(priorities)} accounts protects ${saved:,}/month in recurring revenue.")
+
+# ======================================================================
+# SECTION 1.5 - ROI: what a retention campaign would cost, and return
+# ======================================================================
+st.markdown('<div id="roi"></div>', unsafe_allow_html=True)
+st.markdown(
+    """
+<div class="sec"><h3>What saving them is worth</h3>
+<p>A retention offer costs money to run. This estimates the return on
+targeting your highest-value, highest-risk customers, using assumptions
+you can adjust to match a real campaign.</p></div>
+    """,
+    unsafe_allow_html=True,
+)
+
+roi_col1, roi_col2 = st.columns([1, 1.6])
+
+with roi_col1:
+    discount_pct = st.slider("Offer size (% off monthly bill)", 5, 50, 15, step=5)
+    offer_months = st.slider("Offer duration (months)", 1, 12, 3)
+    success_rate = st.slider(
+        "Expected success rate", 5, 80, 30, step=5,
+        help="Share of targeted customers who stay because of the offer. "
+             "Typical retention-campaign benchmarks run 20-40%.",
+    )
+
+# Target population: the same high-risk, high-spend list as "Who to call
+# first", so the ROI estimate matches the action list shown above it.
+roi_targets = filtered[filtered["RiskTier"] == "High"]
+n_targets = len(roi_targets)
+
+campaign_cost = (roi_targets["MonthlyCharges"] * (discount_pct / 100) * offer_months).sum()
+customers_retained = n_targets * (success_rate / 100)
+revenue_saved = roi_targets["EstimatedLTV"].sum() * (success_rate / 100)
+net_benefit = revenue_saved - campaign_cost
+roi_pct = (net_benefit / campaign_cost * 100) if campaign_cost > 0 else 0
+roi_color = RISK_LOW if net_benefit >= 0 else RISK_HIGH
+
+with roi_col2:
+    r1, r2 = st.columns(2)
+    with r1:
+        st.markdown(
+            f"""<div class="kpi"><div class="lab">Customers targeted</div>
+            <div class="val">{n_targets:,}</div>
+            <div class="sub">High-risk accounts in current filters</div></div>""",
+            unsafe_allow_html=True,
+        )
+        st.markdown(
+            f"""<div class="kpi" style="margin-top:0.55rem;"><div class="lab">Campaign cost</div>
+            <div class="val">${campaign_cost:,.0f}</div>
+            <div class="sub">{offer_months}-month offer at {discount_pct}% off</div></div>""",
+            unsafe_allow_html=True,
+        )
+    with r2:
+        st.markdown(
+            f"""<div class="kpi"><div class="lab">Est. customers retained</div>
+            <div class="val">{customers_retained:,.0f}</div>
+            <div class="sub">At a {success_rate}% success rate</div></div>""",
+            unsafe_allow_html=True,
+        )
+        benefit_label = f"${net_benefit:,.0f} net benefit" if net_benefit >= 0 else f"${abs(net_benefit):,.0f} net cost"
+        st.markdown(
+            f"""<div class="kpi" style="margin-top:0.55rem;"><div class="lab">Net ROI</div>
+            <div class="val" style="color:{roi_color}">{roi_pct:,.0f}%</div>
+            <div class="sub">{benefit_label}</div></div>""",
+            unsafe_allow_html=True,
+        )
+
+st.caption(
+    "Campaign cost = Σ(targeted customers' monthly charge × offer % × offer months). "
+    "Revenue saved = Σ(targeted customers' estimated LTV) × success rate. "
+    "ROI = (Revenue saved − Campaign cost) ÷ Campaign cost. Planning estimates, not guarantees."
+)
 
 # ======================================================================
 # SECTION 2 - DRIVERS: why customers leave (new contract chart)
